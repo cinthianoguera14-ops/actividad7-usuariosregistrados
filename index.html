@@ -1,26 +1,26 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#3157d5">
-  <meta name="description" content="Actividad 7 de Programación y Diseño Web II: inicio de sesión con Google mediante Firebase Authentication.">
-  <title>Actividad 7 | Inicio de sesión con Google</title>
+  <meta name="description" content="Actividad 7 de Programación y Diseño Web II: autenticación con Google y Firebase.">
+  <title>Bienvenido | Cinthia Marketing</title>
   <style>
     :root {
       color-scheme: light;
-      --primary: #3157d5;
-      --primary-dark: #2443ad;
-      --text: #172033;
-      --muted: #596579;
-      --surface: #ffffff;
-      --background: #f3f6fc;
-      --border: #dce3ef;
-      --success-bg: #eaf8ef;
-      --success-text: #17643a;
-      --error-bg: #fff0f0;
-      --error-text: #a32626;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --fondo: #f3f6fb;
+      --superficie: #ffffff;
+      --texto: #172033;
+      --texto-suave: #5b6475;
+      --primario: #3157c8;
+      --primario-hover: #2445a8;
+      --borde: #dce3ef;
+      --exito-fondo: #eaf8ef;
+      --exito-texto: #17633a;
+      --error-fondo: #fff0f0;
+      --error-texto: #a52222;
+      --sombra: 0 18px 50px rgba(28, 44, 80, 0.10);
     }
 
     * { box-sizing: border-box; }
@@ -31,195 +31,199 @@
       display: grid;
       place-items: center;
       padding: 24px;
-      color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(49, 87, 213, .12), transparent 34rem),
-        var(--background);
+        radial-gradient(circle at top left, rgba(49, 87, 200, 0.10), transparent 32rem),
+        var(--fondo);
+      color: var(--texto);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
     }
 
-    .card {
-      width: min(100%, 480px);
-      padding: clamp(24px, 5vw, 40px);
-      background: var(--surface);
-      border: 1px solid var(--border);
+    .contenedor { width: 100%; max-width: 480px; }
+
+    .tarjeta {
+      padding: clamp(24px, 6vw, 42px);
+      background: var(--superficie);
+      border: 1px solid var(--borde);
       border-radius: 24px;
-      box-shadow: 0 18px 50px rgba(31, 48, 86, .10);
+      box-shadow: var(--sombra);
+      text-align: center;
     }
 
-    .eyebrow {
-      margin: 0 0 10px;
-      color: var(--primary);
-      font-size: .82rem;
-      font-weight: 750;
-      letter-spacing: .09em;
-      text-transform: uppercase;
+    .marca {
+      display: inline-grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      margin-bottom: 18px;
+      border-radius: 18px;
+      background: #e9efff;
+      color: var(--primario);
+      font-size: 1.65rem;
+      font-weight: 800;
     }
 
     h1 {
-      margin: 0;
-      font-size: clamp(1.65rem, 5vw, 2.15rem);
-      line-height: 1.15;
-      letter-spacing: -.035em;
+      margin: 0 0 10px;
+      font-size: clamp(1.6rem, 5vw, 2rem);
+      line-height: 1.2;
     }
 
-    .intro {
-      margin: 14px 0 26px;
-      color: var(--muted);
-      line-height: 1.65;
+    .descripcion {
+      margin: 0 auto 26px;
+      max-width: 34ch;
+      color: var(--texto-suave);
     }
 
-    .panel {
-      padding: 20px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: #fbfcff;
-    }
-
-    .panel h2 {
-      margin: 0 0 8px;
-      font-size: 1.1rem;
-    }
-
-    .panel p {
-      margin: 0 0 18px;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .button {
+    .boton {
       width: 100%;
       min-height: 48px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      padding: 12px 16px;
+      gap: 10px;
+      padding: 12px 18px;
       border: 0;
       border-radius: 12px;
+      background: var(--primario);
+      color: #fff;
       font: inherit;
       font-weight: 700;
       cursor: pointer;
       transition: background-color .15s ease, transform .15s ease;
     }
 
-    .button:focus-visible {
-      outline: 3px solid #9bb3ff;
+    .boton:hover:not(:disabled) {
+      background: var(--primario-hover);
+    }
+
+    .boton:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .boton:focus-visible {
+      outline: 3px solid #91aaff;
       outline-offset: 3px;
     }
 
-    .button:hover:not(:disabled) { transform: translateY(-1px); }
-    .button:disabled { opacity: .65; cursor: wait; }
-
-    .button-primary { color: white; background: var(--primary); }
-    .button-primary:hover:not(:disabled) { background: var(--primary-dark); }
-    .button-secondary {
-      margin-top: 12px;
-      color: var(--text);
-      background: #e9edf5;
+    .boton:disabled {
+      cursor: wait;
+      opacity: .65;
     }
-    .button-secondary:hover:not(:disabled) { background: #dce3ef; }
 
-    .google-mark {
+    .boton-secundario {
+      margin-top: 12px;
+      background: #eef2f8;
+      color: var(--texto);
+    }
+
+    .boton-secundario:hover:not(:disabled) {
+      background: #e0e7f2;
+    }
+
+    .google-icon {
       width: 20px;
       height: 20px;
       flex: 0 0 auto;
     }
 
-    .user-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin: 4px 0 18px;
+    .panel {
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 14px;
+      text-align: left;
     }
 
-    .avatar {
-      width: 54px;
-      height: 54px;
-      flex: 0 0 auto;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      border-radius: 50%;
-      background: #e5ebff;
-      color: var(--primary);
-      font-size: 1.2rem;
-      font-weight: 800;
+    .panel p { margin: 0; }
+    .panel p + p { margin-top: 8px; }
+
+    .panel-bienvenida {
+      background: var(--exito-fondo);
+      color: var(--exito-texto);
     }
 
-    .avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .user-name { margin: 0 !important; color: var(--text) !important; font-weight: 750; overflow-wrap: anywhere; }
-    .user-email { margin: 4px 0 0 !important; font-size: .9rem; overflow-wrap: anywhere; }
+    .panel-info {
+      background: #f2f5fb;
+      color: var(--texto-suave);
+    }
 
-    .notice {
-      margin: 18px 0 0;
+    .mensaje-error {
+      margin-top: 16px;
       padding: 12px 14px;
-      border-radius: 10px;
-      line-height: 1.5;
-      font-size: .94rem;
+      border-radius: 12px;
+      background: var(--error-fondo);
+      color: var(--error-texto);
+      text-align: left;
+      overflow-wrap: anywhere;
     }
 
-    .notice:empty { display: none; }
-    .notice-error { color: var(--error-text); background: var(--error-bg); }
-    .notice-success { color: var(--success-text); background: var(--success-bg); }
+    .oculto { display: none !important; }
 
-    .footer {
-      margin: 22px 0 0;
-      color: var(--muted);
-      font-size: .82rem;
+    .pie {
+      margin: 18px 0 0;
+      color: var(--texto-suave);
+      font-size: .85rem;
       text-align: center;
     }
 
-    [hidden] { display: none !important; }
-
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+      *, *::before, *::after {
+        transition: none !important;
+      }
     }
   </style>
 </head>
+
 <body>
-  <main class="card">
-    <p class="eyebrow">Programación y Diseño Web II</p>
-    <h1>Bienvenido/a</h1>
-    <p class="intro">Actividad 7 · Iniciá sesión con tu cuenta de Google para acceder a la bienvenida personalizada.</p>
+  <main class="contenedor">
+    <section class="tarjeta" aria-labelledby="titulo">
+      <div class="marca" aria-hidden="true">CM</div>
 
-    <section id="loading-panel" class="panel" aria-live="polite">
-      <h2>Verificando sesión…</h2>
-      <p>Un momento, estamos comprobando el estado de tu cuenta.</p>
-    </section>
+      <h1 id="titulo">Bienvenido a Cinthia Marketing</h1>
 
-    <section id="guest-panel" class="panel" hidden>
-      <h2>¡Hola, visitante!</h2>
-      <p>Todavía no iniciaste sesión. Usá el botón para ingresar de forma segura con Google.</p>
-      <button id="sign-in-button" class="button button-primary" type="button">
-        <svg class="google-mark" viewBox="0 0 48 48" aria-hidden="true">
-          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" transform="translate(0 5) scale(1 .85)"/>
-          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.73 7.18l7.63 5.92c4.45-4.11 7.14-10.16 7.14-17.57z"/>
-          <path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.2A23.9 23.9 0 0 0 0 24c0 3.87.93 7.52 2.56 10.78l7.97-6.19z" transform="translate(0 1)"/>
-          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.78l-7.63-5.92c-2.12 1.42-4.84 2.27-8.27 2.27-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-        </svg>
-        Iniciar sesión con Google
-      </button>
-    </section>
+      <p class="descripcion">
+        Iniciá sesión con tu cuenta de Google para acceder a la página.
+      </p>
 
-    <section id="user-panel" class="panel" hidden>
-      <h2>¡Sesión iniciada!</h2>
-      <p>Te damos la bienvenida a la página.</p>
-      <div class="user-row">
-        <div id="user-avatar" class="avatar" aria-hidden="true">U</div>
-        <div>
-          <p id="user-name" class="user-name"></p>
-          <p id="user-email" class="user-email"></p>
+      <div id="estado-visitante">
+        <button id="btn-google" class="boton" type="button">
+          <svg class="google-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" transform="translate(0 4)"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.73 7.18l7.65 5.94c4.47-4.13 7.12-10.2 7.12-17.59z"/>
+            <path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.53 2.56 10.78l7.97-6.19z" transform="translate(0 4)"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.81l-7.65-5.94c-2.13 1.43-4.86 2.27-8.25 2.27-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" transform="translate(0 -4)"/>
+          </svg>
+          <span>Iniciar sesión con Google</span>
+        </button>
+
+        <div class="panel panel-info">
+          <p><strong>¡Hola!</strong> Todavía no iniciaste sesión.</p>
+          <p>Usá el botón para ingresar de forma segura con Google.</p>
         </div>
       </div>
-      <button id="sign-out-button" class="button button-secondary" type="button">Cerrar sesión</button>
+
+      <div id="estado-autenticado" class="oculto" aria-live="polite">
+        <div class="panel panel-bienvenida">
+          <p><strong>¡Bienvenido/a!</strong></p>
+          <p id="nombre-usuario">Tu sesión está iniciada.</p>
+          <p id="correo-usuario"></p>
+        </div>
+
+        <button id="btn-salir" class="boton boton-secundario" type="button">
+          Cerrar sesión
+        </button>
+      </div>
+
+      <p id="mensaje-error" class="mensaje-error oculto" role="alert"></p>
+      <p id="estado-carga" class="pie" role="status" aria-live="polite"></p>
     </section>
 
-    <p id="status-message" class="notice" role="status" aria-live="polite"></p>
-    <p class="footer">Autenticación implementada con Firebase Authentication.</p>
+    <p class="pie">Actividad 7 · Programación y Diseño Web II</p>
   </main>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
     import {
       getAuth,
       GoogleAuthProvider,
@@ -228,150 +232,128 @@
       onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-    // IMPORTANTE: reemplazá el texto de apiKey por el valor COMPLETO de Firebase.
-    // El resto de los datos corresponde a la configuración indicada para este proyecto.
+    // Configuración real del proyecto Firebase.
     const firebaseConfig = {
-  apiKey: "AIzaSyCSyGzlknfpYXz8rv6pM2daNuzZa5SeGUY",
-  authDomain: "bienvenido-a-cinthia-marketing.firebaseapp.com",
-  projectId: "bienvenido-a-cinthia-marketing",
-  storageBucket: "bienvenido-a-cinthia-marketing.firebasestorage.app",
-  messagingSenderId: "158646150955",
-  appId: "1:158646150955:web:b6406929ac0bd18eec876e"
-};
+      apiKey: "AIzaSyCSyGzlknfpYXz8rv6pM2daNuzZa5SeGUY",
+      authDomain: "bienvenido-a-cinthia-marketing.firebaseapp.com",
+      projectId: "bienvenido-a-cinthia-marketing",
+      storageBucket: "bienvenido-a-cinthia-marketing.firebasestorage.app",
+      messagingSenderId: "158646150955",
+      appId: "1:158646150955:web:b6406929ac0bd18eec876e"
+    };
 
-    const loadingPanel = document.getElementById("loading-panel");
-    const guestPanel = document.getElementById("guest-panel");
-    const userPanel = document.getElementById("user-panel");
-    const signInButton = document.getElementById("sign-in-button");
-    const signOutButton = document.getElementById("sign-out-button");
-    const userName = document.getElementById("user-name");
-    const userEmail = document.getElementById("user-email");
-    const userAvatar = document.getElementById("user-avatar");
-    const statusMessage = document.getElementById("status-message");
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const proveedorGoogle = new GoogleAuthProvider();
 
-    function showMessage(message = "", type = "") {
-      statusMessage.textContent = message;
-      statusMessage.className = "notice";
-      if (type === "error") statusMessage.classList.add("notice-error");
-      if (type === "success") statusMessage.classList.add("notice-success");
+    const estadoVisitante = document.getElementById("estado-visitante");
+    const estadoAutenticado = document.getElementById("estado-autenticado");
+    const btnGoogle = document.getElementById("btn-google");
+    const btnSalir = document.getElementById("btn-salir");
+    const nombreUsuario = document.getElementById("nombre-usuario");
+    const correoUsuario = document.getElementById("correo-usuario");
+    const mensajeError = document.getElementById("mensaje-error");
+    const estadoCarga = document.getElementById("estado-carga");
+
+    function mostrarError(mensaje) {
+      mensajeError.textContent = mensaje;
+      mensajeError.classList.remove("oculto");
     }
 
-    function setLoading(isLoading) {
-      signInButton.disabled = isLoading;
-      signOutButton.disabled = isLoading;
-      signInButton.setAttribute("aria-busy", String(isLoading));
-      signOutButton.setAttribute("aria-busy", String(isLoading));
+    function limpiarError() {
+      mensajeError.textContent = "";
+      mensajeError.classList.add("oculto");
     }
 
-    function showSignedOut() {
-      loadingPanel.hidden = true;
-      guestPanel.hidden = false;
-      userPanel.hidden = true;
-    }
+    function traducirError(error) {
+      switch (error?.code) {
+        case "auth/popup-closed-by-user":
+          return "Se cerró la ventana de Google antes de completar el inicio de sesión.";
 
-    function showSignedIn(user) {
-      loadingPanel.hidden = true;
-      guestPanel.hidden = true;
-      userPanel.hidden = false;
+        case "auth/popup-blocked":
+          return "El navegador bloqueó la ventana emergente. Permití las ventanas emergentes e intentá nuevamente.";
 
-      userName.textContent = user.displayName || "Usuario de Google";
-      userEmail.textContent = user.email || "Correo electrónico no disponible";
+        case "auth/unauthorized-domain":
+          return "Este dominio no está autorizado en Firebase. Agregalo en Authentication → Settings → Authorized domains.";
 
-      if (user.photoURL) {
-        const photo = document.createElement("img");
-        photo.src = user.photoURL;
-        photo.alt = "";
-        userAvatar.replaceChildren(photo);
-      } else {
-        userAvatar.textContent = (user.displayName || user.email || "U")
-          .trim()
-          .charAt(0)
-          .toUpperCase();
+        case "auth/operation-not-allowed":
+          return "El acceso con Google no está habilitado. Activá el proveedor Google en Firebase Authentication.";
+
+        case "auth/network-request-failed":
+          return "No se pudo conectar con Firebase. Revisá tu conexión a internet e intentá otra vez.";
+
+        case "auth/cancelled-popup-request":
+          return "Ya hay una ventana de inicio de sesión abierta. Completala o cerrala antes de volver a intentar.";
+
+        default:
+          return `Ocurrió un error${error?.code ? ` (${error.code})` : ""}. Revisá la configuración de Firebase e intentá nuevamente.`;
       }
     }
 
-    function explainAuthError(error, action) {
-      console.error(`Error al ${action}:`, error);
-      const code = error?.code || "";
+    // Iniciar sesión con Google.
+    btnGoogle.addEventListener("click", async () => {
+      limpiarError();
+      btnGoogle.disabled = true;
+      estadoCarga.textContent = "Conectando con Google…";
 
-      if (code === "auth/popup-closed-by-user") {
-        return "Se cerró la ventana de Google antes de completar el inicio de sesión.";
+      try {
+        await signInWithPopup(auth, proveedorGoogle);
+      } catch (error) {
+        console.error("Error al iniciar sesión:", error);
+        mostrarError(traducirError(error));
+      } finally {
+        btnGoogle.disabled = false;
+        estadoCarga.textContent = "";
       }
-      if (code === "auth/popup-blocked") {
-        return "El navegador bloqueó la ventana emergente. Permití las ventanas emergentes e intentá nuevamente.";
-      }
-      if (code === "auth/unauthorized-domain") {
-        return "Este dominio no está autorizado en Firebase. Agregá el dominio del sitio en Authentication → Settings → Authorized domains.";
-      }
-      if (code === "auth/operation-not-allowed") {
-        return "El acceso con Google no está habilitado. Activá el proveedor Google en Firebase Authentication.";
-      }
-      if (code === "auth/network-request-failed") {
-        return "No se pudo conectar con Firebase. Revisá tu conexión a Internet e intentá nuevamente.";
-      }
-      if (code === "auth/invalid-api-key") {
-        return "La API key no es válida. Revisá que hayas pegado la clave completa de la configuración de Firebase.";
-      }
-      return `No se pudo ${action}. ${error?.message || "Revisá la configuración de Firebase e intentá nuevamente."}`;
-    }
+    });
 
-    let auth;
+    // Cerrar la sesión actual.
+    btnSalir.addEventListener("click", async () => {
+      limpiarError();
+      btnSalir.disabled = true;
+      estadoCarga.textContent = "Cerrando sesión…";
 
-    try {
-      if (!firebaseConfig.apiKey || firebaseConfig.apiKey.includes("PEGÁ_ACÁ")) {
-        throw new Error("Falta completar apiKey con la clave completa de Firebase.");
+      try {
+        await signOut(auth);
+      } catch (error) {
+        console.error("Error al cerrar sesión:", error);
+        mostrarError(traducirError(error));
+      } finally {
+        btnSalir.disabled = false;
+        estadoCarga.textContent = "";
       }
+    });
 
-      const app = initializeApp(firebaseConfig);
-      auth = getAuth(app);
-      const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: "select_account" });
+    // Detectar si hay un usuario autenticado.
+    onAuthStateChanged(
+      auth,
+      (usuario) => {
+        limpiarError();
 
-      signInButton.addEventListener("click", async () => {
-        setLoading(true);
-        showMessage();
-        try {
-          await signInWithPopup(auth, provider);
-          showMessage("Inicio de sesión realizado correctamente.", "success");
-        } catch (error) {
-          showMessage(explainAuthError(error, "iniciar sesión"), "error");
-        } finally {
-          setLoading(false);
-        }
-      });
+        if (usuario) {
+          estadoVisitante.classList.add("oculto");
+          estadoAutenticado.classList.remove("oculto");
 
-      signOutButton.addEventListener("click", async () => {
-        setLoading(true);
-        showMessage();
-        try {
-          await signOut(auth);
-          showMessage("Cerraste sesión correctamente.", "success");
-        } catch (error) {
-          showMessage(explainAuthError(error, "cerrar sesión"), "error");
-        } finally {
-          setLoading(false);
-        }
-      });
+          nombreUsuario.textContent =
+            usuario.displayName || "Tu cuenta de Google";
 
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          showSignedIn(user);
+          correoUsuario.textContent = usuario.email || "";
         } else {
-          showSignedOut();
+          estadoAutenticado.classList.add("oculto");
+          estadoVisitante.classList.remove("oculto");
+
+          nombreUsuario.textContent = "";
+          correoUsuario.textContent = "";
         }
-      }, (error) => {
+      },
+      (error) => {
         console.error("Error al comprobar la autenticación:", error);
-        loadingPanel.hidden = true;
-        showMessage("No se pudo comprobar el estado de la sesión. Recargá la página y verificá la configuración de Firebase.", "error");
-        showSignedOut();
-      });
-    } catch (error) {
-      console.error("Error al inicializar Firebase:", error);
-      loadingPanel.hidden = true;
-      showSignedOut();
-      showMessage(error.message || "No se pudo inicializar Firebase. Revisá la configuración.", "error");
-      signInButton.disabled = true;
-    }
+
+        mostrarError(
+          "No se pudo comprobar el estado de la sesión. Recargá la página e intentá nuevamente."
+        );
+      }
+    );
   </script>
 </body>
 </html>
